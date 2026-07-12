@@ -18,4 +18,19 @@ def create_patient_in_db(db: Session, patient_data: PatientCreate):
     
     return new_patient
 
+# 1. Saare patients read karne ka function
+def get_all_patients_from_db(db: Session):
+    return db.query(PatientModel).all()
 
+# 2. Kisi specific doctor ke saare patients dhoondne ka function (Advanced Analysis)
+def get_patients_by_doctor_from_db(db: Session, doctor_id: int):
+    return db.query(PatientModel).filter(PatientModel.doctor_id == doctor_id).all()
+
+# 3. Patient delete karne ka function
+def delete_patient_from_db(db: Session, patient_id: int):
+    db_patient = db.query(PatientModel).filter(PatientModel.id == patient_id).first()
+    if db_patient:
+        db.delete(db_patient)
+        db.commit()
+        return True
+    return False
