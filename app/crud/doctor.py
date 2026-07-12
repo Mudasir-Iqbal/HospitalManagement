@@ -8,6 +8,8 @@ def create_doctor_in_db(db: Session, doctor_data: DoctorCreate):
         name=doctor_data.name,
         specialization=doctor_data.specialization,
         email=doctor_data.email
+        phone=doctor_data.phone,     
+        salary=doctor_data.salary
     )
     
     db.add(new_doctor)       # 2. Database queue mein add kiya
