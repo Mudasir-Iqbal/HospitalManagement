@@ -26,3 +26,19 @@ def get_all_doctors_from_db(db: Session):
 def get_doctor_by_id_from_db(db: Session, doctor_id: int):
     # SQL equivalent: SELECT * FROM doctors WHERE id = doctor_id LIMIT 1;
     return db.query(DoctorModel).filter(DoctorModel.id == doctor_id).first()
+
+
+# 1. Update Karne Ka Function
+def update_doctor_in_db(db: Session, doctor_id: int, updated_data: DoctorCreate):
+    # Pehle us doctor ko dhoondho jise badalna hai
+    db_doctor = db.query(DoctorModel).filter(DoctorModel.id == doctor_id).first()
+    
+    if db_doctor:
+        # Purane data ki jagah naya data set karo
+        db_doctor.name = updated_data.name
+        db_doctor.specialization = updated_data.specialization
+        db_doctor.email = updated_data.email
+        
+        db.commit()        # Changes ko save kiya
+        db.refresh(db_doctor) # Object ko sync kiya
+    return db_doctor
