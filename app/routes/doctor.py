@@ -2,7 +2,7 @@ from fastapi import APIRouter,Depends,HTTPException
 from app.schemas.doctor import DoctorCreate # Apne naye form ko import kiya
 from sqlalchemy.orm import Session
 from app.database import SessionLocal # Hamari session factory
-from app.crud.doctor import create_doctor_in_db ,get_all_doctors_from_db, get_doctor_by_id_from_db
+from app.crud.doctor import create_doctor_in_db ,get_all_doctors_from_db, get_doctor_by_id_from_db,update_doctor_in_db, delete_doctor_from_db
 
 
 router = APIRouter(prefix="/doctor", tags=["Doctors"])
@@ -44,3 +44,13 @@ def read_doctor_by_id(doctor_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Doctor nahi mila boss!")
         
     return doctor
+
+# 🟢 1. Update Counter (PUT Request)
+@router.put("/{doctor_id}")
+def update_doctor(doctor_id: int, doctor_data: DoctorCreate, db: Session = Depends(get_db)):
+    updated_doctor = update_doctor_in_db(db=db, doctor_id=doctor_id, updated_data=doctor_data)
+    
+    if not updated_doctor:
+        raise HTTPException(status_code=404, detail="Update karne ke liye doctor nahi mila!")
+        
+    return {"message": "Doctor data successfully update ho gaya!", "data": updated_doctor}
