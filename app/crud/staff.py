@@ -28,7 +28,7 @@ def get_all_staff_from_db(db: Session):
 
 # 2. Specific ID se data read karne ka function
 def get_staff_by_id_from_db(db: Session, staff_id: int):
-    # SQL equivalent: SELECT * FROM doctors WHERE id = staff_id LIMIT 1;
+    # SQL equivalent: SELECT * FROM staff WHERE id = staff_id LIMIT 1;
     return db.query(StaffModel).filter(StaffModel.id == staff_id).first()
 
 
@@ -50,7 +50,7 @@ def update_staff_in_db(db: Session, staff_id: int, updated_data: StaffCreate):
 
 
 # 2. Delete Karne Ka Function
-def delete_doctor_from_db(db: Session, staff_id: int):
+def delete_staff_from_db(db: Session, staff_id: int):
     db_staff = db.query(StaffModel).filter(StaffModel.id == staff_id).first()
     
     if db_staff:
