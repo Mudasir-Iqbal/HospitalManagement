@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-# 1. PostgreSQL ka rasta (URL)
-# Format: postgresql://username:password@host:port/database_name
-DATABASE_URL = "postgresql://postgres:shikra@localhost:5432/hospital_db"
+# 🟢 MySQL Connection String
+# Format: mysql+pymysql://username:password@host:port/database_name
+# Username: root, Port: 3306, Password: jo aapka MySQL ka password hai (e.g., shikra)
+DATABASE_URL = "mysql+pymysql://root:shikra@localhost:3306/hospital_db"
 
 # 2. Engine banaya (Jo database se physically raabta qaim rakhega)
 engine = create_engine(DATABASE_URL)
