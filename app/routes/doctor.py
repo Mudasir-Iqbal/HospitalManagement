@@ -1,8 +1,8 @@
-from fastapi import APIRouter,Depends
+from fastapi import APIRouter,Depends,HTTPException
 from app.schemas.doctor import DoctorCreate # Apne naye form ko import kiya
 from sqlalchemy.orm import Session
 from app.database import SessionLocal # Hamari session factory
-from app.crud.doctor import create_doctor_in_db # CRUD function import kiya
+from app.crud.doctor import create_doctor_in_db ,get_all_doctors_from_db, get_doctor_by_id_from_db
 
 
 router = APIRouter(prefix="/doctor", tags=["Doctors"])
@@ -14,7 +14,7 @@ def get_db():
     finally:
         db.close()
 
-# 🟢 Ab ye asli POST handler ban gaya hai
+# Ab ye asli POST handler ban gaya hai
 @router.post("/")
 def create_doctor(doctor: DoctorCreate, db: Session = Depends(get_db)):
     # Humne data aur database session dono CRUD manager ko de diye
@@ -26,3 +26,21 @@ def create_doctor(doctor: DoctorCreate, db: Session = Depends(get_db)):
         "database_id": saved_doctor.id
     }
 
+
+# 1. Sab doctors ki list dekhne ka counter
+@router.get("/")
+def read_all_doctors(db: Session = Depends(get_db)):
+    doctors_list = get_all_doctors_from_db(db=db)
+    return doctors_list
+
+# 2. Kisi aik doctor ko ID se dhoondne ka counter
+@router.get("/{doctor_id}")
+def read_doctor_by_id(doctor_id: int, db: Session = Depends(get_db)):
+    doctor = get_doctor_by_id_from_db(db=db, doctor_id=doctor_id)
+    
+    # ⚠️ Master Edge Case Check: Agar database mein wo ID maujood hi na ho?
+    if not doctor:
+        # Client ko standard 404 error response bhejo
+        raise HTTPException(status_code=404, detail="Doctor nahi mila boss!")
+        
+    return doctor
