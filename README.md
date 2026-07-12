@@ -99,7 +99,7 @@ Is project ko apne local system par run karne ke liye niche diye gaye steps ko f
 ### 1. Clone the Repository
 
 ```bash
-git clone [https://github.com/YOUR_USERNAME/HospitalManagement.git](https://github.com/YOUR_USERNAME/HospitalManagement.git)
+git clone https://github.com/Mudasir-Iqbal/HospitalManagement.git
 cd HospitalManagement
 
 ```
