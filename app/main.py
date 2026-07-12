@@ -6,7 +6,8 @@ from app.models import patient as patient_model
 
 
 # Ye line server start hote hi models ko check karegi aur PostgreSQL mein tables bana degi!
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine) alembic hotay howy iski need nhi hoti
+
 
 app = FastAPI(title="Hospital Management System")
 
