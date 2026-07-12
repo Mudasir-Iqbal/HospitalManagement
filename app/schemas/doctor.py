@@ -5,3 +5,5 @@ class DoctorCreate(BaseModel):
     name: str
     specialization: str
     email: str
+    phone: str
+    salary: float
