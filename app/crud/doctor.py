@@ -42,3 +42,14 @@ def update_doctor_in_db(db: Session, doctor_id: int, updated_data: DoctorCreate)
         db.commit()        # Changes ko save kiya
         db.refresh(db_doctor) # Object ko sync kiya
     return db_doctor
+
+
+# 2. Delete Karne Ka Function
+def delete_doctor_from_db(db: Session, doctor_id: int):
+    db_doctor = db.query(DoctorModel).filter(DoctorModel.id == doctor_id).first()
+    
+    if db_doctor:
+        db.delete(db_doctor) # Database state se delete kiya
+        db.commit()          # Permanent delete confirm kiya
+        return True
+    return False
