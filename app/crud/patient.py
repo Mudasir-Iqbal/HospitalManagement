@@ -17,3 +17,5 @@ def create_patient_in_db(db: Session, patient_data: PatientCreate):
     db.refresh(new_patient)  # 4. ID aur admission_date automatic sync ho jayengi
     
     return new_patient
+
+
