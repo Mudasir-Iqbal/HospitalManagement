@@ -45,7 +45,7 @@ def read_doctor_by_id(doctor_id: int, db: Session = Depends(get_db)):
         
     return doctor
 
-# 🟢 1. Update Counter (PUT Request)
+# 1. Update Counter (PUT Request)
 @router.put("/{doctor_id}")
 def update_doctor(doctor_id: int, doctor_data: DoctorCreate, db: Session = Depends(get_db)):
     updated_doctor = update_doctor_in_db(db=db, doctor_id=doctor_id, updated_data=doctor_data)
@@ -54,3 +54,17 @@ def update_doctor(doctor_id: int, doctor_data: DoctorCreate, db: Session = Depen
         raise HTTPException(status_code=404, detail="Update karne ke liye doctor nahi mila!")
         
     return {"message": "Doctor data successfully update ho gaya!", "data": updated_doctor}
+
+
+
+# 2. Delete Counter (DELETE Request)
+@router.delete("/{doctor_id}")
+def delete_doctor(doctor_id: int, db: Session = Depends(get_db)):
+    success = delete_doctor_from_db(db=db, doctor_id=doctor_id)
+    
+    if not success:
+        raise HTTPException(status_code=404, detail="Delete karne ke liye doctor nahi mila!")
+        
+    return {"message": f"ID {doctor_id} wala doctor database se delete kar diya gaya hai."}
+
+
