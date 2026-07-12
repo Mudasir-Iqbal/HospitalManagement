@@ -7,7 +7,7 @@ def create_doctor_in_db(db: Session, doctor_data: DoctorCreate):
     new_doctor = DoctorModel(
         name=doctor_data.name,
         specialization=doctor_data.specialization,
-        email=doctor_data.email
+        email=doctor_data.email,
         phone=doctor_data.phone,     
         salary=doctor_data.salary
     )
